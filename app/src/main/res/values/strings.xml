@@ -2,6 +2,9 @@
     <string name="app_name">BarCodic</string>
     <string name="scan">Scan</string>
     <string name="keyboard_text">Barcode</string>
+    <string name="manual_input">Manual Input</string>
+    <string name="single_input">Single Scan</string>
+
 
 
 </resources>

@@ -17,7 +17,6 @@ public class ExampleDialog extends AppCompatDialogFragment {
 //    String var = MainActivity.getVariable();
     public static ExampleDialog newInstance(String msg) {
                 ExampleDialog fragment = new ExampleDialog();
-
                 Bundle bundle = new Bundle();
                 bundle.putString("msg", msg);
                 fragment.setArguments(bundle);
@@ -27,11 +26,11 @@ public class ExampleDialog extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        String price = "7,500";
-        String currency = " L.L";
+        String price = "";
+        String currency = "";
         String english_name = "blah1";
         String arabic_name = "blah2";
-
+        Log.e("ExampleDialog", getArguments().getString("msg"));
         final MainActivity main = (MainActivity) getActivity();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(price + currency)

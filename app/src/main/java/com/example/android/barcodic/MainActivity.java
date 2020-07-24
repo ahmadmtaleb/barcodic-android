@@ -28,6 +28,7 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
     public static String myVariable;
+    public static Boolean scanned = false;
     private RequestQueue mQueue;
     public static String english_name;
     public static String arabic_name;
@@ -60,22 +61,27 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 IntentIntegrator scanner = new IntentIntegrator(MainActivity.this);
                 scanner.initiateScan();
-                jsonParse();
-                openDialog();
 
+//                jsonParse();
+//                openDialog();
+
+                if(scanned) {
+                    jsonParse();
+                    openDialog();
+                    scanned = !scanned;
+                }else {
+                    scanner.initiateScan();
+                    jsonParse();
+                    openDialog();
+                    scanned = !scanned;
+
+                }
             }
         });
     }
     private void jsonParse() {
         mQueue = Volley.newRequestQueue(this);
-        String url = "http://192.168.1.10:8000/api/items-barcode/"+myVariable;
-//        String url = "http://192.168.1.255:8000/api/items-barcode/"+myVariable;
-//        String url = "http://172.17.0.1:8000/api/items-barcode/"+myVariable;
-//        String url = "http://10.0.2.2:8000/api/items-barcode/"+myVariable;
-//        String url = "http://127.0.0.1:8000/api/items-barcode/"+myVariable;
-
-        Log.e("fetchedUrl", url);
-        Log.e("jsonParseFetched1",english_name+arabic_name+price);
+        String url = "http://192.168.1.35:8000/api/items-barcode/"+myVariable;
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
@@ -85,10 +91,8 @@ public class MainActivity extends AppCompatActivity {
                             english_name = item.getString("english_name");
                             arabic_name = item.getString("arabic_name");
                             price = item.getString("price");
-                            Log.e("jsonParseFetched2",english_name+arabic_name+price);
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        Log.e("catchErrorException", "catched Error what the fuck");
                     }
                 }, error -> error.printStackTrace());
         mQueue.add(request);
@@ -96,7 +100,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void openDialog() {
 //        ExampleDialog exampleDialog = new ExampleDialog();
-        ExampleDialog exampleDialog = new ExampleDialog().newInstance(myVariable);
+        ExampleDialog exampleDialog = new ExampleDialog().newInstance(
+                price + "L.L. \n" + myVariable + "\n" + english_name + "\n" + arabic_name + "\n");
         exampleDialog.show(getSupportFragmentManager(), "example dialog");
     }
 
@@ -104,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         myVariable = result.getContents();
-
+        scanned = true;
         if (result != null) {
             if (result.getContents() == null) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();

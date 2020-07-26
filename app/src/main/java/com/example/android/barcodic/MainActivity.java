@@ -64,24 +64,24 @@ public class MainActivity extends AppCompatActivity {
 
 //                jsonParse();
 //                openDialog();
+//
+//                if(scanned) {
+////                    jsonParse();
+//                    openDialog();
+//                    scanned = !scanned;
+//                }else {
+//                    scanner.initiateScan();
+////                    jsonParse();
+//                    openDialog();
+//                    scanned = !scanned;
 
-                if(scanned) {
-                    jsonParse();
-                    openDialog();
-                    scanned = !scanned;
-                }else {
-                    scanner.initiateScan();
-                    jsonParse();
-                    openDialog();
-                    scanned = !scanned;
-
-                }
+//                }
             }
         });
     }
-    private void jsonParse() {
-        mQueue = Volley.newRequestQueue(this);
-        String url = "http://192.168.1.35:8000/api/items-barcode/"+myVariable;
+    private void jsonParse(String myVar) {
+        mQueue = Volley.newRequestQueue(MainActivity.this);
+        String url = "http://192.168.1.3:8000/api/items-barcode/"+myVar;
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
                             english_name = item.getString("english_name");
                             arabic_name = item.getString("arabic_name");
                             price = item.getString("price");
+                            openDialog(myVar, price, english_name, arabic_name);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -98,10 +99,13 @@ public class MainActivity extends AppCompatActivity {
         mQueue.add(request);
 }
 
-    public void openDialog() {
+    public void openDialog(String barcode, String price, String name1, String name2) {
 //        ExampleDialog exampleDialog = new ExampleDialog();
         ExampleDialog exampleDialog = new ExampleDialog().newInstance(
-                price + "L.L. \n" + myVariable + "\n" + english_name + "\n" + arabic_name + "\n");
+                price + "L.L. \n" + barcode + "\n" + name1 + "\n" + name2 + "\n");
+//        ExampleDialog exampleDialog = new ExampleDialog().newInstance(
+//                price + "L.L. \n" + myVariable + "\n" + english_name + "\n" + arabic_name + "\n");
+//        ExampleDialog exampleDialog = new ExampleDialog().newInstance(myVariable);
         exampleDialog.show(getSupportFragmentManager(), "example dialog");
     }
 
@@ -115,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                jsonParse(myVariable);
+
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

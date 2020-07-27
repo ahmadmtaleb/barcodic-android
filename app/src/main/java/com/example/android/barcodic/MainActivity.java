@@ -85,16 +85,10 @@ public class MainActivity extends AppCompatActivity {
 }
 
     public void openDialog(String barcode, String price, String name1, String name2) {
-//        ExampleDialog exampleDialog = new ExampleDialog();
         String msg1 = price + "  L.L.";
         String msg2 = name2 + "\n" + name1 + "\n" + barcode;
         ExampleDialog exampleDialog = new ExampleDialog()
                 .newInstance(msg1, msg2);
-//        ExampleDialog exampleDialog = new ExampleDialog()
-//                .newInstance(price + "L.L.", name1 + "\n" + name2 + "\n" + barcode);
-//        ExampleDialog exampleDialog = new ExampleDialog().newInstance(
-//                price + "L.L. \n" + myVariable + "\n" + english_name + "\n" + arabic_name + "\n");
-//        ExampleDialog exampleDialog = new ExampleDialog().newInstance(myVariable);
         exampleDialog.show(getSupportFragmentManager(), "example dialog");
     }
 

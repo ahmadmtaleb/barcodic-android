@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatDialogFragment;
@@ -22,10 +23,11 @@ public class ExampleDialog extends AppCompatDialogFragment {
 //    private RequestQueue mQueue;
 //    MainActivity MainActivity = new MainActivity();
 //    String var = MainActivity.getVariable();
-    public static ExampleDialog newInstance(String msg) {
+    public static ExampleDialog newInstance(String msg1, String msg2) {
                 ExampleDialog fragment = new ExampleDialog();
                 Bundle bundle = new Bundle();
-                bundle.putString("msg", msg);
+                bundle.putString("msg1", msg1);
+                bundle.putString("msg2", msg2);
                 fragment.setArguments(bundle);
                 return fragment;
             }
@@ -40,12 +42,10 @@ public class ExampleDialog extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-//        jsonParse();
         final MainActivity main = (MainActivity) getActivity();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("")
-                .setMessage(getArguments().getString("msg"))
-//                .setMessage("Name: " +english_name+"\n"+"Name: "+arabic_name+"\n"+"Barcode: "+barcode)
+        builder.setTitle(getArguments().getString("msg1"))
+                .setMessage(getArguments().getString("msg2"))
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -54,22 +54,5 @@ public class ExampleDialog extends AppCompatDialogFragment {
         return builder.create();
 
     }
-//    private void jsonParse() {
-//        String url = "http://192.168.1.35:8000/api/items-barcode/"+barcode;
-//
-//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-//                response -> {
-//                    try {
-//                        JSONArray jsonArray = response.getJSONArray("data");
-//                        JSONObject item = jsonArray.getJSONObject(0);
-//                        english_name = item.getString("english_name");
-//                        arabic_name = item.getString("arabic_name");
-//                        price = item.getString("price");
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }, error -> error.printStackTrace());
-//        mQueue.add(request);
-//    }
 
 }

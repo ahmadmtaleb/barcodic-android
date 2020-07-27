@@ -42,7 +42,7 @@ public class ExampleDialog extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        final MainActivity main = (MainActivity) getActivity();
+//        final MainActivity main = (MainActivity) getActivity();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getArguments().getString("msg1"))
                 .setMessage(getArguments().getString("msg2"))

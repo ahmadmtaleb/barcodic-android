@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 IntentIntegrator scanner = new IntentIntegrator(MainActivity.this);
+                scanner.setOrientationLocked(false);
                 scanner.initiateScan();
             }
         });

@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void jsonParse(String myVar) {
         mQueue = Volley.newRequestQueue(MainActivity.this);
-        String url = "http://192.168.1.3:8000/api/items-barcode/"+myVar;
+        String url = "http://192.168.1.12:8000/api/items-barcode/"+myVar;
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
